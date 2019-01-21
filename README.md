@@ -34,7 +34,7 @@ $ npm install babel-plugin-arrow
 
 ```json
 {
-  "plugins": ["arrow"]
+  "plugins": ["@dwd/arrow"]
 }
 ```
 
@@ -48,6 +48,6 @@ $ babel --plugins arrow script.js
 
 ```javascript
 require("babel-core").transform("code", {
-  plugins: ["arrow"]
+  plugins: ["@dwd/arrow"]
 });
 ```

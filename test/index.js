@@ -18,6 +18,7 @@ describe('form dwd arrow', () => {
       // const expected = fs.readFileSync(
       //     path.join(fixtureDir, 'expected.js')
       // ).toString();
+      console.log(actual);
       assert.equal(!actual.includes('ant') && actual.includes('arrow') , true);
     });
   });

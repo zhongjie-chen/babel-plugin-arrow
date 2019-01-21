@@ -1,16 +1,13 @@
 export default function({types: t }) {
-  const updateTemplateElementVisitor = {
-    TemplateElement(path) {
-      console.log(path.node.value);
-      if (path.node.value && path.node.value.raw === 'ant-') {
-        path.node.value = {
-          raw: 'arrow-',
-          cooked: 'arrow-'
-        }
+  const updateConfigContentLiteralVisitor = {
+    Literal(path) {
+      if (path.node.value === 'ant-') {
+        path.node.value = 'arrow-'
+        path.node.arrow = "\"arrow-\""
       }
     }
-  }
-  const updateLiteralVisitor = {
+  };
+  const updateConfigProviderLiteralVisitor = {
     Literal(path) {
       if (path.node.value === 'ant') {
         path.node.value = 'arrow'
@@ -22,14 +19,12 @@ export default function({types: t }) {
     visitor: {
       VariableDeclarator: (path) => {
         if (path.node.id.name === 'ConfigContext') {
-          path.traverse(updateTemplateElementVisitor, path.node.init)
+          path.traverse(updateConfigContentLiteralVisitor, path.node.init)
+        }
+        if (path.node.id.name === 'ConfigProvider') {
+          path.traverse(updateConfigProviderLiteralVisitor, path.node.init)
         }
       },
-      ClassDeclaration: (path) => {
-        if (path.node.id.name === 'ConfigProvider') {
-          path.traverse(updateLiteralVisitor, path.node.body)
-        }
-      }
     }
   };
 }
